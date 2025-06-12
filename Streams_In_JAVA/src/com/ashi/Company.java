@@ -8,7 +8,7 @@ public class Company {
 	public static List<Employee> getAllEmployees(){
 		 List<Employee> employees = new ArrayList<>();
 
-		    employees.add(new Employee(1, "Ashi", "Delhi", 25, "Female", "IT", 2018, 75000));
+		    employees.add(new Employee(1, "Ashi", "Delhi", 25, "Male", "IT", 2018, 75000));
 		    employees.add(new Employee(2, "Raj", "Mumbai", 30, "Male", "Finance", 2015, 65000));
 		    employees.add(new Employee(3, "Neha", "Pune", 27, "Female", "HR", 2019, 55000));
 		    employees.add(new Employee(4, "Amit", "Bangalore", 35, "Male", "Marketing", 2012, 80000));
