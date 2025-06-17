@@ -1,13 +1,16 @@
 package com.ashi;
 
+import java.time.temporal.Temporal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
 
 public class MainApplication {
 	public static void main(String[] args) {
@@ -209,124 +212,225 @@ public class MainApplication {
 		 * 
 		 * )); System.out.println(collect2);
 		 */
-		
+
 		System.out.println("i need to store id's of employees in list :");
-		
-		List<Integer> collect = employees.stream().map(e -> e.getId())
-						 .collect(Collectors.toList());
-		//collect.forEach(System.out::println);
+
+		List<Integer> collect = employees.stream().map(e -> e.getId()).collect(Collectors.toList());
+		// collect.forEach(System.out::println);
 		System.out.println(collect);
-		
-		//get the avgsal of the company
-		
-		
-		
-		//before java 8
-		double s =0;
-		for(Employee e : employees) {
-			
+
+		// get the avgsal of the company
+
+		// before java 8
+		double s = 0;
+		for (Employee e : employees) {
+
 			s += e.getSalary();
-			
+
 		}
-		
-		System.out.println("Avg sal :"+(s)/employees.size());
-		
-		//after java 8
-		Double collect2 = employees.stream().map(e -> e.getSalary()).collect(Collectors.averagingDouble( e -> e ));
-		System.out.println("avg sal of the company :"+collect2);
-		
-		
-		//grouping 
-		
+
+		System.out.println("Avg sal :" + (s) / employees.size());
+
+		// after java 8
+		Double collect2 = employees.stream().map(e -> e.getSalary()).collect(Collectors.averagingDouble(e -> e));
+		System.out.println("avg sal of the company :" + collect2);
+
+		// grouping
+
 		System.out.println("Depatment wise employee count :");
-		
+
 		Map<String, Long> collect3 = employees.stream().collect(Collectors.groupingBy(
-				
-				                dept -> dept.getDepartment(), //key
-				                Collectors.counting() //value
-				
-				));
-		
+
+				dept -> dept.getDepartment(), // key
+				Collectors.counting() // value
+
+		));
+
 		System.out.println(collect3);
-						 
-		
+
 		System.out.println("city wise count :");
-		
+
 		Map<String, Long> collect4 = employees.stream().collect(Collectors.groupingBy(
-				
-                e -> e.getCity(), //key
-                Collectors.counting() //value
 
-				));
+				e -> e.getCity(), // key
+				Collectors.counting() // value
 
-			System.out.println(collect4);
-			
-			
-			System.out.println("city wise count F/M :");
-			
-			Map<String, Map<String, Long>> collect5 = employees.stream().collect(Collectors.groupingBy(
-					   
-					    e -> e.getCity(),            //key
-					    
-					    Collectors.groupingBy(
-					    		eq -> eq.getGender(), //key
-					    		Collectors.counting()//value
-					    		)                                //value
-					    
-					    
-					
-					));
-			System.out.println(collect5);
+		));
+
+		System.out.println(collect4);
+
+		System.out.println("city wise count F/M :");
+
+		Map<String, Map<String, Long>> collect5 = employees.stream().collect(Collectors.groupingBy(
+
+				e -> e.getCity(), // key
+
+				Collectors.groupingBy(eq -> eq.getGender(), // key
+						Collectors.counting()// value
+				) // value
+
+		));
+		System.out.println(collect5);
+
+		// summerize
+
+		System.out.println("City wise sum of sal :");
+
+		Map<String, Double> collect6 = employees.stream().collect(Collectors.groupingBy(
+
+				e -> e.getCity(), // key
+				Collectors.summingDouble(e -> e.getSalary()) // value
+
+		));
+		System.out.println(collect6);
+
+		// put id as KEY and rest off all as values
+
+		Map<Integer, List<Employee>> collect7 = employees.stream().collect(Collectors.groupingBy(e -> e.getId(), // key
+
+				Collectors.toList() // value
+
+		));
+
+		System.out.println(collect7);
+
+		// joining()
+
+		System.out.println("joining :");
+
+		String collect8 = employees.stream().map(e -> e.getName()).collect(Collectors.joining(","));
+		System.out.println(collect8);
+
+		// partionBy()
+
+		System.out.println("partionBy :");
+
+		Map<Boolean, Long> collect9 = employees.stream().collect(Collectors.partitioningBy(
+
+				e -> e.getCity().equals("Pune"), // key
+
+				Collectors.counting() // value
+
+		));
+		System.out.println(collect9);
+
+		// Comparator
+
+		// it is a functional interface
+//			@FunctionalInterface
+//			public interface Comparator<T> {
+//			    int compare(T o1, T o2); //abstract  methods
+//			}
 		
-			//summerize 
-			
-			System.out.println("City wise sum of sal :");
-			
-			Map<String, Double> collect6 = employees.stream().collect(Collectors.groupingBy(
-					
-					e -> e.getCity(), //key
-					Collectors.summingDouble(e -> e.getSalary()) //value
-					
-					));
-			System.out.println(collect6);
-			
-			//put id as KEY and rest off all as values
-			
-			Map<Integer, List<Employee>> collect7 = employees.stream().collect(Collectors.groupingBy(
-					    e -> e.getId(), //key 
-					    
-					    Collectors.toList() //value
-					    
-					));
-			
-			System.out.println(collect7);
-			
-			//joining()
-			
-			System.out.println("joining :");
-			
-			String collect8 = employees.stream().map(e -> e.getName()).collect(Collectors.joining(","));
-			System.out.println(collect8);
-			
-			//partionBy()
-			
-			System.out.println("partionBy :");
-			
-			Map<Boolean, Long> collect9 = employees.stream().collect(Collectors.partitioningBy(
-					
-					e -> e.getCity().equals("Pune"), //key
-					
-					Collectors.counting() //value
-					
-					));
-			System.out.println(collect9);
-			
-			
-			
-			
-			
-			
+//			•	Returns:
+//			o	negative → o1 comes before o2
+//			o	zero → o1 and o2 are equal
+//			o	positive → o1 comes after o2
 		
+		
+		//sorted() -> intermediate operations 
+		
+		System.out.println("get the salary of the employees in sorted order :");
+								
+		employees.stream().map(e -> e.getSalary())
+					.sorted()
+					.forEach(System.out::println);
+		
+		//sorted(Compatator)
+		
+		System.out.println("get the salary of the employees in sorted order :");
+		
+		employees.stream().sorted(Comparator.comparing(Employee::getSalary).reversed())
+					.forEach(System.out::println);
+		
+		
+		 //i am sorting based on ages .... if ages are matcheched... next matched constrant ??
+		
+		 //thenComparing()
+		// MPC student 1, student2  got same marks ..but top ??
+		// s1.maths == s2.maths .....s1.phyics check with s2.physics 
+		
+		
+		System.out.println("===========================================================================================================================");
+		
+		employees.stream()
+					.sorted(Comparator.comparing(Employee::getAge)
+							.thenComparing(Comparator.comparing(Employee::getYearOfJoining).reversed()))
+					.forEach(System.out::println);
+		
+		
+		/*
+		 * //frequency of an element List<Integer> numList = List.of(2,3,1,2,3,4,5,6,5);
+		 * 
+		 * //output : {1 = 1, 2 = 3, 3 = 1, 4 = 1, 5 = 2, 6 = 1} //output : 2
+		 * 
+		 * Map<Integer,Long> freqMap = numList.stream() .collect(Collectors.groupingBy(
+		 * num -> num, Collectors.counting() ));
+		 * 
+		 * //how to print map<k.v> in forEach() freqMap.forEach((k,v) ->
+		 * System.out.println(k+" : "+v));
+		 * 
+		 * //max element in the valueset Optional<Long> max =
+		 * freqMap.values().stream().max(Comparator.comparing(Long::intValue));
+		 * 
+		 * 
+		 * 
+		 * Optional<Entry<Integer, Long>> first = freqMap.entrySet().stream() .filter(e
+		 * -> e.getValue() == max.get()) .findFirst();
+		 * 
+		 * 
+		 * System.out.println("most epeting values : "+first.get().getKey());
+		 */
+		
+		System.out.println("===============================Stream result :====================================");
+		employees.stream().forEach(System.out::println);
+		
+		System.out.println("===============================Parallel Stream result :===========================");
+		
+		employees.parallelStream().forEach(System.out::println);
+		
+	//List<Employee> convert to Map<id,name>
+		
+    Map<Integer, String> collect10 = employees.stream().collect(Collectors.toMap(
+    		Employee::getId, //key 
+    		Employee::getName //value
+    		
+    		));
+			
+		System.out.println(collect10);
+		
+		 Map<Integer, String> collect11 = employees.stream().collect(Collectors.groupingBy(
+		    		Employee::getId,
+		    		Collectors.mapping(Employee::getName, Collectors.joining(","))
+		    		));
+		 System.out.println(collect11);
 
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
