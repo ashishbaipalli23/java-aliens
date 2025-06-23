@@ -55,6 +55,15 @@ public class MainApplication {
 		System.out.println("Array List after  :" + numList);
 		
 	
+		ArrayList<Integer> list1 = new ArrayList<Integer>(List.of(33,44,22,33,22,3));
+		
+		List<Integer> subList = list1.subList(1, 4);
+		subList.clear();
+		//list1.add(2222); -> will throw  concurrent modification exception 
+		System.out.println("sub list :" + subList);
+		System.out.println(list1);
+		
+		
 		
 
 	}

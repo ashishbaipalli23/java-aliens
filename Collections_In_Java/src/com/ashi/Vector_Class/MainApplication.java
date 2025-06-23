@@ -48,7 +48,7 @@ public class MainApplication {
 		
 		 
 		 
-		 
+		 numIntegers.addElement(elementAt);
 		 
 		 
 		 

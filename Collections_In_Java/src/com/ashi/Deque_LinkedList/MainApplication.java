@@ -1,5 +1,6 @@
 package com.ashi.Deque_LinkedList;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -117,7 +118,7 @@ public class MainApplication {
 		numIntegers2.addFirst(3);
 		numIntegers2.offerFirst(4);
 		numIntegers2.addLast(5);
-		numIntegers2.offerLast(6);
+		numIntegers2.offerLast(6);// it would violate capacity restrictions.
 
 		System.out.println(numIntegers2);
 
@@ -128,8 +129,22 @@ public class MainApplication {
 		numIntegers2.push(1111);
 		System.out.println(numIntegers2);
 		
+		//offer()
 		
-     
+		LinkedList<Integer> list1 = new LinkedList<Integer>();
+		list1.offer(1);//Adds the specified element as the tail (last element) of this list.
+		list1.offerFirst(2);
+		list1.offerLast(3);//Inserts the specified element at the end of this list.
+		list1.push(4);
+		list1.add(5);
+		list1.addFirst(6);
+		list1.addLast(7);
+		System.out.println(list1);
+		
+		
+		
+
+		
 	}
 
 }
