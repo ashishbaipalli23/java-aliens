@@ -33,7 +33,7 @@ public class MainApplication {
 		// iterator()
 
 		Iterator<String> iterator = set.iterator();
-		// set.add("K");=> ConcurrentModificationException
+		// set.add("K");//=> ConcurrentModificationException
 		while (iterator.hasNext()) {
 			String string = (String) iterator.next();
 			System.out.println(string);
